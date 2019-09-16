@@ -14,12 +14,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
-            run: ./bin/build staging 1SOF2sf218IFdLZhnqBlKB true
-            shell: bash
+              run: ./bin/build staging 1SOF2sf218IFdLZhnqBlKB true
+              shell: bash
     production:
         name: Production
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
-            run: ./bin/build staging 4oTgZx12jEy9ycSsrGmUW5 false
-            shell: bash
+              run: ./bin/build staging 4oTgZx12jEy9ycSsrGmUW5 false
+              shell: bash
