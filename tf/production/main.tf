@@ -3,7 +3,7 @@ provider "fastly" {
   version = "0.9.0"
 }
 
-resource "fastly_service_v1" "api-serive-production-0p7ElaomsexoNHwdMbYJac" {
+resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   name = "Production"
 
   domain {
