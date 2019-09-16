@@ -4,7 +4,8 @@ provider "fastly" {
 }
 
 resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
-  name = "Production"
+  activate = false
+  name     = "Production"
 
   domain {
     name    = "production.boombumerang.com"
