@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -x
+set -e
+
+export PATH="$PATH":"`pwd`"/bin
+
+export WORLD=$1
+
+terraform apply $WORLD.plan
