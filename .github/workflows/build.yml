@@ -1,0 +1,31 @@
+name: CI
+
+on:
+    pull_request:
+        branches:
+            - master
+    push:
+        branches:
+            - master
+
+jobs:
+    staging:
+        name: Staging
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: Terraform staging build tasks
+              env:
+                TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
+              run: ./bin/build staging 1SOF2sf218IFdLZhnqBlKB true
+              shell: bash
+    production:
+        name: Production
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v1
+            - name: Terraform production build tasks
+              env:
+                TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
+              run: ./bin/build production 0p7ElaomsexoNHwdMbYJac false
+              shell: bash
