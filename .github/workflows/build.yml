@@ -23,5 +23,5 @@ jobs:
         steps:
             - uses: actions/checkout@v1
             - name: Terraform production build tasks
-              run: ./bin/build staging 4oTgZx12jEy9ycSsrGmUW5 false
+              run: ./bin/build production 0p7ElaomsexoNHwdMbYJac false
               shell: bash
