@@ -14,6 +14,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
+            - name: Terraform staging build tasks
               run: ./bin/build staging 1SOF2sf218IFdLZhnqBlKB true
               shell: bash
     production:
@@ -21,5 +22,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v1
+            - name: Terraform production build tasks
               run: ./bin/build staging 4oTgZx12jEy9ycSsrGmUW5 false
               shell: bash
