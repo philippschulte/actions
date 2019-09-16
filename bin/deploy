@@ -6,5 +6,11 @@ set -e
 export PATH="$PATH":"`pwd`"/bin
 
 export WORLD=$1
+export SERVICE_ID=$2
+export ACTIVATE=$3
 
+terraform init -input=false -no-color tf/$WORLD
+terraform import -input=false -config=tf/$WORLD -no-color fastly_service_v1.api-service-$WORLD-$SERVICE_ID $SERVICE_ID
+jq '.resources[].instances[].attributes.activate = env.ACTIVATE' terraform.tfstate > temp && mv temp terraform.tfstate
+terraform plan -input=false -out=$WORLD.plan -no-color tf/$WORLD
 terraform apply $WORLD.plan
