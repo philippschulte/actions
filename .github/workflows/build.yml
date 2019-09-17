@@ -17,13 +17,16 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
+                  TF_ACTION_COMMENT: true
             - name: Terraform fmt
               uses: hashicorp/terraform-github-actions/fmt@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
+                  TF_ACTION_COMMENT: true
             - name: Terraform validate
               uses: hashicorp/terraform-github-actions/validate@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
+                  TF_ACTION_COMMENT: true
