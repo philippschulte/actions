@@ -6,33 +6,24 @@ on:
             - master
 
 jobs:
-    staging_terraform_fmt:
-        name: Staging - terraform fmt
+    staging:
+        name: Staging
         runs-on: ubuntu-latest
         steps:
-            - name: Terraform fmt
-              uses: hashicorp/terraform-github-actions/fmt@v0.3.7
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  TF_ACTION_WORKING_DIR: tf/staging
-    staging_terraform_init:
-        name: Staging - terraform init
-        needs: staging_checkout_repository
-        runs-on: ubuntu-latest
-        steps:
+            - name: Checkout repository
+            - uses: actions/checkout@v1
             - name: Terraform init
-              uses: hashicorp/terraform-github-actions/init@v0.3.7
+            - uses: hashicorp/terraform-github-actions/init@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
-    staging_terraform_validate:
-        name: Staging - terraform validate
-        needs: staging_terraform_init
-        runs-on: ubuntu-latest
-        steps:
+            - name: Terraform fmt
+            - uses: hashicorp/terraform-github-actions/fmt@v0.3.7
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TF_ACTION_WORKING_DIR: tf/staging
             - name: Terraform validate
-              uses: hashicorp/terraform-github-actions/validate@v0.3.7
+            - uses: hashicorp/terraform-github-actions/validate@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
-
