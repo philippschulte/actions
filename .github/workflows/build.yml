@@ -18,7 +18,7 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
             - name: Print Terraform version
-              run: terraform version
+              run: terraform --version
             - name: Terraform fmt
               uses: ./.github/actions/terraform-github-actions/fmt
               env:
