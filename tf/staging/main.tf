@@ -22,7 +22,6 @@ comment = "Staging"
     name    = "localhost"
     port    = 80
   }
-}
 
   backend {
     address = "1.2.3.4"
