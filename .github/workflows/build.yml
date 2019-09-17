@@ -11,19 +11,19 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
-            - uses: actions/checkout@v1
+              uses: actions/checkout@v1
             - name: Terraform init
-            - uses: hashicorp/terraform-github-actions/init@v0.3.7
+              uses: hashicorp/terraform-github-actions/init@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
             - name: Terraform fmt
-            - uses: hashicorp/terraform-github-actions/fmt@v0.3.7
+              uses: hashicorp/terraform-github-actions/fmt@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
             - name: Terraform validate
-            - uses: hashicorp/terraform-github-actions/validate@v0.3.7
+              uses: hashicorp/terraform-github-actions/validate@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
