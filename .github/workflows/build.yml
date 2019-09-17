@@ -17,7 +17,7 @@ jobs:
                   TF_ACTION_WORKING_DIR: tf/staging
     staging_terraform_init:
         name: Staging - terraform init
-        needs: staging_checkout_repository
+        needs: staging_terraform_fmt
         runs-on: ubuntu-latest
         steps:
             - name: Terraform init
