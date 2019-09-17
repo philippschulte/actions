@@ -13,8 +13,8 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
   }
 
   domain {
-name    = "api.boombumerang.com"
-comment = "API"
+    name    = "api.boombumerang.com"
+    comment = "API"
   }
 
   backend {
