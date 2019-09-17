@@ -10,6 +10,7 @@ jobs:
         name: Staging - terraform fmt
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v1
             - name: Terraform fmt
               uses: hashicorp/terraform-github-actions/fmt@v0.3.7
               env:
@@ -20,6 +21,7 @@ jobs:
         needs: staging_terraform_fmt
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v1
             - name: Terraform init
               uses: hashicorp/terraform-github-actions/init@v0.3.7
               env:
@@ -30,6 +32,7 @@ jobs:
         needs: staging_terraform_init
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v1
             - name: Terraform validate
               uses: hashicorp/terraform-github-actions/validate@v0.3.7
               env:
