@@ -6,23 +6,33 @@ on:
             - master
 
 jobs:
-    staging:
-        name: Staging
+    staging_terraform_fmt:
+        name: Staging - terraform fmt
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
-            - name: Terraform staging build tasks
+            - name: Terraform fmt
+              uses: hashicorp/terraform-github-actions/fmt@v0.3.7
               env:
-                  TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
-              run: ./bin/build staging 1SOF2sf218IFdLZhnqBlKB true
-              shell: bash
-    production:
-        name: Production
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TF_ACTION_WORKING_DIR: tf/staging
+    staging_terraform_init:
+        name: Staging - terraform init
+        needs: staging_checkout_repository
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v1
-            - name: Terraform production build tasks
+            - name: Terraform init
+              uses: hashicorp/terraform-github-actions/init@v0.3.7
               env:
-                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
-              run: ./bin/build production 0p7ElaomsexoNHwdMbYJac false
-              shell: bash
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TF_ACTION_WORKING_DIR: tf/staging
+    staging_terraform_validate:
+        name: Staging - terraform validate
+        needs: staging_terraform_init
+        runs-on: ubuntu-latest
+        steps:
+            - name: Terraform validate
+              uses: hashicorp/terraform-github-actions/validate@v0.3.7
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TF_ACTION_WORKING_DIR: tf/staging
+
