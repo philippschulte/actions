@@ -13,19 +13,19 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v1
             - name: Terraform init
-              uses: ./.github/actions/terraform-github-actions/init
+              uses: hashicorp/terraform-github-actions/init@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
             - name: Print Terraform version
               run: terraform --version
             - name: Terraform fmt
-              uses: ./.github/actions/terraform-github-actions/fmt
+              uses: hashicorp/terraform-github-actions/fmt@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
             - name: Terraform validate
-              uses: ./.github/actions/terraform-github-actions/validate
+              uses: hashicorp/terraform-github-actions/validate@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
@@ -36,7 +36,7 @@ jobs:
             - name: Add activate attribute to Terraform state
               run: jq '.resources[].instances[].attributes.activate = env.ACTIVATE' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
-              uses: ./.github/actions/terraform-github-actions/plan
+              uses: hashicorp/terraform-github-actions/plan@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
