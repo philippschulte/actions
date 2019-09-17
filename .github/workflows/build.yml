@@ -17,16 +17,26 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
-                  TF_ACTION_COMMENT: true
+            - name: Print Terraform version
+              run: terraform version
             - name: Terraform fmt
               uses: ./.github/actions/terraform-github-actions/fmt
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
-                  TF_ACTION_COMMENT: true
             - name: Terraform validate
               uses: ./.github/actions/terraform-github-actions/validate
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
-                  TF_ACTION_COMMENT: true
+            - name: Terraform import
+              run: terraform import -input=false -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
+            - name: Print jq version
+              run: jq --version
+            - name: Add activate attribute to Terraform state
+              run: jq '.resources[].instances[].attributes.activate = env.ACTIVATE' terraform.tfstate > temp && mv temp terraform.tfstate
+            - name: Terraform plan
+              uses: ./.github/actions/terraform-github-actions/plan
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  TF_ACTION_WORKING_DIR: tf/staging
