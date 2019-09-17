@@ -14,7 +14,7 @@ jobs:
               uses: hashicorp/terraform-github-actions/fmt@v0.3.7
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  TF_ACTION_WORKING_DIR: .tf/staging
+                  TF_ACTION_WORKING_DIR: tf/staging
     staging_terraform_init:
         name: Staging - terraform init
         needs: staging_terraform_fmt
