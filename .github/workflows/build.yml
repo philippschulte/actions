@@ -39,7 +39,7 @@ jobs:
             - name: Print jq version
               run: jq --version
             - name: Add activate attribute to Terraform state
-              run: jq '.resources[].instances[].attributes.activate = env.ACTIVATE' terraform.tfstate > temp && mv temp terraform.tfstate
+              run: jq '.resources[].instances[].attributes.activate = true' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
               uses: hashicorp/terraform-github-actions/plan@v0.4.0
               with:
