@@ -48,3 +48,5 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_ACTION_WORKING_DIR: tf/staging
+                  TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
+
