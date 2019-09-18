@@ -1,0 +1,31 @@
+name: CD - Production
+on:
+    push:
+        branches:
+            - master
+jobs:
+    production:
+        name: Production
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v1
+            - name: Terraform init
+              env:
+                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
+              run: terraform init -input=false -no-color tf/production
+            - name: Terraform import
+              env:
+                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
+              run: terraform import -input=false -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
+            - name: Add activate attribute to Terraform state
+              run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
+            - name: Terraform plan
+              env:
+                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
+              run: terraform plan -input=false -out=production.plan -no-color tf/production
+            - name: Terraform apply
+              env:
+                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
+              run: terraform apply production.plan
+
