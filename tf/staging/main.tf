@@ -25,6 +25,7 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
 
   backend {
     address = "1.2.3.4"
+    name    = "localhost2"
     port    = 80
   }
 }
