@@ -12,9 +12,19 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
     comment = "Production"
   }
 
+  domain {
+        name    = "p2.boombumerang.com"
+    comment = "Production"
+  }
+
   backend {
     address = "1.2.3.4"
     name    = "localhost"
+    port    = 80
+  }
+
+  backend {
+    address = "1.2.3.4"
     port    = 80
   }
 }
