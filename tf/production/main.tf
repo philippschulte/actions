@@ -13,7 +13,7 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   }
 
   domain {
-        name    = "p2.boombumerang.com"
+    name    = "p2.boombumerang.com"
     comment = "Production"
   }
 
