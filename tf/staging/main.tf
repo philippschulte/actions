@@ -12,9 +12,20 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
     comment = "Staging"
   }
 
+  domain {
+    name    = "s2.boombumerang.com"
+    comment = "Staging"
+  }
+
   backend {
     address = "1.2.3.4"
     name    = "localhost"
+    port    = 80
+  }
+
+  backend {
+    address = "1.2.3.4"
+    name    = "localhost2"
     port    = 80
   }
 }
