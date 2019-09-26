@@ -12,6 +12,10 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
     comment = "Production"
   }
 
+  domain {
+comment = "Production-2"
+  }
+
   backend {
     address               = "1.2.3.4"
     auto_loadbalance      = true
