@@ -4,8 +4,20 @@ on:
         branches:
             - master
 jobs:
-    production:
-        name: Production
+    production_terraform_fmt:
+        name: Terraform fmt
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v1
+            - name: Terraform fmt
+              uses: hashicorp/terraform-github-actions/fmt@v0.4.0
+              with:
+                  args: tf/production
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    production_terraform_init:
+        name: Terraform init
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -16,20 +28,32 @@ jobs:
                   args: tf/production
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            - name: Print Terraform version
+            - name: Terraform version
               run: terraform --version
-            - name: Terraform fmt
-              uses: hashicorp/terraform-github-actions/fmt@v0.4.0
-              with:
-                  args: tf/production
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    production_terraform_validate:
+        name: Terraform validate
+        runs-on: ubuntu-latest
+        needs: production_terraform_init
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v1
+            - name: Terraform init
+              run: terraform init -input=false -no-color tf/production
             - name: Terraform validate
               uses: hashicorp/terraform-github-actions/validate@v0.4.0
               with:
                   args: tf/production
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    production_terraform_plan:
+        name: Terraform plan
+        runs-on: ubuntu-latest
+        needs: production_terraform_init
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v1
+            - name: Terraform init
+              run: terraform init -input=false -no-color tf/production
             - name: Terraform import
               env:
                   TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
@@ -45,4 +69,3 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
-
