@@ -12,11 +12,6 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
     comment = "Staging"
   }
 
-  domain {
-    name    = "staging-2.boombumerang.com"
-    comment = "Staging-2"
-  }
-
   backend {
     address               = "1.2.3.4"
     auto_loadbalance      = true
