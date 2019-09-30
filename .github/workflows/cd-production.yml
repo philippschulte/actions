@@ -28,4 +28,5 @@ jobs:
               env:
                   TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
               run: terraform apply production.plan
-
+            - name: Print Terraform state
+              run: cat terraform.tfstate
