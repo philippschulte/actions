@@ -13,7 +13,8 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   }
 
   domain {
-comment = "apex"
+    name    = "production-test.boombumerang.com"
+    comment = "apex"
   }
 
   backend {
