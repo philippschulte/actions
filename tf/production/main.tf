@@ -12,6 +12,11 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
     comment = "Production"
   }
 
+  domain {
+    name    = "production-test.boombumerang.com"
+    comment = "apex"
+  }
+
   backend {
     address               = "1.2.3.4"
     auto_loadbalance      = true
