@@ -55,6 +55,8 @@ jobs:
               uses: actions/checkout@v1
             - name: Terraform init
               uses: hashicorp/terraform-github-actions/init@v0.4.6
+              with:
+                  args: tf/staging
             - name: Terraform import
               run: terraform import -input=false -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
             - name: Print jq version
@@ -63,3 +65,5 @@ jobs:
               run: jq '.resources[].instances[].attributes.activate = true' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
               uses: hashicorp/terraform-github-actions/plan@v0.4.6
+              with:
+                  args: tf/staging
