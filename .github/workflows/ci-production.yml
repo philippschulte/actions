@@ -66,4 +66,4 @@ jobs:
             - name: Terraform plan
               uses: hashicorp/terraform-github-actions/plan@v0.4.6
               with:
-                  args: tf/staging
+                  args: tf/production
