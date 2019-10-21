@@ -39,7 +39,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v1
             - name: Terraform init
-              run: terraform init -input=false -no-color tf/staging
+              uses: hashicorp/terraform-github-actions/init@v0.4.6
             - name: Terraform validate
               uses: hashicorp/terraform-github-actions/validate@v0.4.6
     staging_terraform_plan:
@@ -54,7 +54,7 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v1
             - name: Terraform init
-              run: terraform init -input=false -no-color tf/staging
+              uses: hashicorp/terraform-github-actions/init@v0.4.6
             - name: Terraform import
               run: terraform import -input=false -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
             - name: Print jq version
