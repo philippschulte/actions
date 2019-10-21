@@ -64,6 +64,16 @@ jobs:
             - name: Add activate attribute to Terraform state
               run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
+              id: plan
               uses: hashicorp/terraform-github-actions/plan@v0.4.6
               with:
                   args: tf/production
+            - name: Fastly Terraform metadata
+              id: metadata
+              uses: philippschulte/fastly-terraform-metadata-action@master
+              with:
+                  tf_action_changes_present: ${{ steps.plan.outputs.changes-present }}
+            - name: Print Fastly Terraform metadata action outputs
+              run: |
+                  echo "${{ steps.metadata.outputs.fastly_service_config_url }}"
+                  echo "${{ steps.metadata.outputs.fastly_service_version_info }}"
