@@ -29,9 +29,7 @@ jobs:
               with:
                   args: tf/staging
             - name: Terraform version
-              run: |
-                  cd tf/staging
-                  terraform --version
+              run: terraform --version
     staging_terraform_validate:
         name: Terraform validate
         runs-on: ubuntu-latest
