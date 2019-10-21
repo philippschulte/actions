@@ -1,7 +1,0 @@
-2019/10/08 10:14:13 [INFO] Terraform version: 0.12.9  
-2019/10/08 10:14:13 [INFO] Go runtime version: go1.13
-2019/10/08 10:14:13 [INFO] CLI args: []string{"/usr/local/bin/terraform", "fmt", "main.tf"}
-2019/10/08 10:14:13 [DEBUG] Attempting to open CLI config file: /Users/pschulte/.terraformrc
-2019/10/08 10:14:13 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
-2019/10/08 10:14:13 [INFO] CLI command args: []string{"fmt", "main.tf"}
-2019/10/08 10:14:13 [TRACE] terraform fmt: Formatting main.tf

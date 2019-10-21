@@ -7,26 +7,24 @@ jobs:
     production:
         name: Production
         runs-on: ubuntu-latest
+        env:
+            TF_ACTION_WORKING_DIR: tf/production
+            TF_ACTION_COMMENT: false
+            TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v1
             - name: Terraform init
-              env:
-                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
-              run: terraform init -input=false -no-color tf/production
+              uses: hashicorp/terraform-github-actions/init@v0.4.6
             - name: Terraform import
-              env:
-                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
               run: terraform import -input=false -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
             - name: Add activate attribute to Terraform state
               run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
-              env:
-                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
-              run: terraform plan -input=false -out=production.plan -no-color tf/production
+              uses: hashicorp/terraform-github-actions/plan@v0.4.6
+              with:
+                  args: -out=production.plan
             - name: Terraform apply
-              env:
-                  TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
-              run: terraform apply production.plan
-            - name: Print Terraform state
-              run: cat terraform.tfstate
+              uses: hashicorp/terraform-github-actions/apply@v0.4.6
+              with:
+                  args: production.plan

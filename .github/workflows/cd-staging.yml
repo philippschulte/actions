@@ -7,25 +7,24 @@ jobs:
     staging:
         name: Staging
         runs-on: ubuntu-latest
+        env:
+            TF_ACTION_WORKING_DIR: tf/staging
+            TF_ACTION_COMMENT: false
+            TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v1
             - name: Terraform init
-              env:
-                  TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
-              run: terraform init -input=false -no-color tf/staging
+              uses: hashicorp/terraform-github-actions/init@v0.4.6
             - name: Terraform import
-              env:
-                  TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
               run: terraform import -input=false -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
             - name: Add activate attribute to Terraform state
               run: jq '.resources[].instances[].attributes.activate = true' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
-              env:
-                  TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
-              run: terraform plan -input=false -out=staging.plan -no-color tf/staging
+              uses: hashicorp/terraform-github-actions/plan@v0.4.6
+              with:
+                  args: -out=staging.plan
             - name: Terraform apply
-              env:
-                  TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
-              run: terraform apply staging.plan
-
+              uses: hashicorp/terraform-github-actions/apply@v0.4.6
+              with:
+                  args: staging.plan
