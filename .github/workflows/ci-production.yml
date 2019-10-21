@@ -77,3 +77,5 @@ jobs:
               run: |
                   echo "${{ steps.metadata.outputs.fastly_service_config_url }}"
                   echo "${{ steps.metadata.outputs.fastly_service_version_info }}"
+            - name: Hello
+              run: echo "hello, world"
