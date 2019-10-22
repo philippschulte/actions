@@ -1,0 +1,45 @@
+2019/10/22 13:43:32 [INFO] Terraform version: 0.12.10  
+2019/10/22 13:43:32 [INFO] Go runtime version: go1.12
+2019/10/22 13:43:32 [INFO] CLI args: []string{"/usr/local/opt/go/libexec/bin/terraform", "-version"}
+2019/10/22 13:43:32 [DEBUG] Attempting to open CLI config file: /Users/pschulte/.terraformrc
+2019/10/22 13:43:32 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2019/10/22 13:43:32 [INFO] CLI command args: []string{"version", "-version"}
+2019/10/22 13:43:32 [DEBUG] checking for provider in "."
+2019/10/22 13:43:32 [DEBUG] checking for provider in "/usr/local/opt/go/libexec/bin"
+2019/10/22 13:43:32 [INFO] Failed to read plugin lock file .terraform/plugins/darwin_amd64/lock.json: open .terraform/plugins/darwin_amd64/lock.json: no such file or directory
+2019/10/22 13:43:32 [INFO] Terraform version: 0.12.10  
+2019/10/22 13:43:32 [INFO] Go runtime version: go1.12
+2019/10/22 13:43:32 [INFO] CLI args: []string{"/usr/local/opt/go/libexec/bin/terraform", "-v"}
+2019/10/22 13:43:32 [DEBUG] Attempting to open CLI config file: /Users/pschulte/.terraformrc
+2019/10/22 13:43:32 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2019/10/22 13:43:32 [INFO] CLI command args: []string{"version", "-v"}
+2019/10/22 13:43:32 [DEBUG] checking for provider in "."
+2019/10/22 13:43:32 [DEBUG] checking for provider in "/usr/local/opt/go/libexec/bin"
+2019/10/22 13:43:32 [INFO] Failed to read plugin lock file .terraform/plugins/darwin_amd64/lock.json: open .terraform/plugins/darwin_amd64/lock.json: no such file or directory
+2019/10/22 13:43:32 [INFO] Terraform version: 0.12.10  
+2019/10/22 13:43:32 [INFO] Go runtime version: go1.12
+2019/10/22 13:43:32 [INFO] CLI args: []string{"/usr/local/opt/go/libexec/bin/terraform", "-version"}
+2019/10/22 13:43:32 [DEBUG] Attempting to open CLI config file: /Users/pschulte/.terraformrc
+2019/10/22 13:43:32 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2019/10/22 13:43:32 [INFO] CLI command args: []string{"version", "-version"}
+2019/10/22 13:43:32 [DEBUG] checking for provider in "."
+2019/10/22 13:43:32 [DEBUG] checking for provider in "/usr/local/opt/go/libexec/bin"
+2019/10/22 13:43:32 [INFO] Failed to read plugin lock file .terraform/plugins/darwin_amd64/lock.json: open .terraform/plugins/darwin_amd64/lock.json: no such file or directory
+2019/10/22 13:43:33 [INFO] Terraform version: 0.12.9  
+2019/10/22 13:43:33 [INFO] Go runtime version: go1.13
+2019/10/22 13:43:33 [INFO] CLI args: []string{"/usr/local/bin/terraform", "-version"}
+2019/10/22 13:43:33 [DEBUG] Attempting to open CLI config file: /Users/pschulte/.terraformrc
+2019/10/22 13:43:33 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2019/10/22 13:43:33 [INFO] CLI command args: []string{"version", "-version"}
+2019/10/22 13:43:33 [DEBUG] checking for provider in "."
+2019/10/22 13:43:33 [DEBUG] checking for provider in "/usr/local/bin"
+2019/10/22 13:43:33 [INFO] Failed to read plugin lock file .terraform/plugins/darwin_amd64/lock.json: open .terraform/plugins/darwin_amd64/lock.json: no such file or directory
+2019/10/22 13:43:33 [INFO] Terraform version: 0.12.10  
+2019/10/22 13:43:33 [INFO] Go runtime version: go1.12
+2019/10/22 13:43:33 [INFO] CLI args: []string{"/usr/local/opt/go/libexec/bin/terraform", "--version"}
+2019/10/22 13:43:33 [DEBUG] Attempting to open CLI config file: /Users/pschulte/.terraformrc
+2019/10/22 13:43:33 [DEBUG] File doesn't exist, but doesn't need to. Ignoring.
+2019/10/22 13:43:33 [INFO] CLI command args: []string{"version", "--version"}
+2019/10/22 13:43:33 [DEBUG] checking for provider in "."
+2019/10/22 13:43:33 [DEBUG] checking for provider in "/usr/local/opt/go/libexec/bin"
+2019/10/22 13:43:33 [INFO] Failed to read plugin lock file .terraform/plugins/darwin_amd64/lock.json: open .terraform/plugins/darwin_amd64/lock.json: no such file or directory
