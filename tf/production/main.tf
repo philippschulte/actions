@@ -1,6 +1,6 @@
 provider "fastly" {
   api_key = var.FASTLY_PRODUCTION_API_KEY
-  version = "0.9.0"
+  version = "0.11.0"
 }
 
 resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
@@ -33,3 +33,14 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   }
 }
 
+output "active_version" {
+  value = fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac.active_version
+}
+
+output "cloned_version" {
+  value = fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac.cloned_version
+}
+
+output "service_id" {
+  value = fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac.id
+}
