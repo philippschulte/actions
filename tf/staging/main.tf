@@ -33,3 +33,14 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
   }
 }
 
+output "active_version" {
+  value = fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB.active_version
+}
+
+output "cloned_version" {
+  value = fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB.cloned_version
+}
+
+output "service_id" {
+  value = fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB.id
+}

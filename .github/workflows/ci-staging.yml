@@ -68,12 +68,3 @@ jobs:
               uses: hashicorp/terraform-github-actions/plan@v0.4.6
               with:
                   args: tf/staging
-            - name: Fastly Terraform metadata
-              id: metadata
-              uses: philippschulte/fastly-terraform-metadata-action@master
-              with:
-                  tf_action_changes_present: ${{ steps.plan.outputs.changes-present }}
-            - name: Print Fastly Terraform metadata action outputs
-              run: |
-                  echo "${{ steps.metadata.outputs.fastly_service_config_url }}"
-                  echo "${{ steps.metadata.outputs.fastly_service_version_info }}"

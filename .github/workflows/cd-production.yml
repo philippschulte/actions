@@ -8,7 +8,6 @@ jobs:
         name: Production
         runs-on: ubuntu-latest
         env:
-            TF_ACTION_WORKING_DIR: tf/production
             TF_ACTION_COMMENT: false
             TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
         steps:
@@ -16,15 +15,32 @@ jobs:
               uses: actions/checkout@v1
             - name: Terraform init
               uses: hashicorp/terraform-github-actions/init@v0.4.6
+              with:
+                  args: tf/production
+            - name: Terraform version
+              run: terraform --version
             - name: Terraform import
               run: terraform import -input=false -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
-            - name: Add activate attribute to Terraform state
+            - name: Update activate attribute in Terraform state file
               run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
             - name: Terraform plan
+              id: plan
               uses: hashicorp/terraform-github-actions/plan@v0.4.6
               with:
-                  args: -out=production.plan
+                  args: ['tf/production', '-out=production.plan']
             - name: Terraform apply
               uses: hashicorp/terraform-github-actions/apply@v0.4.6
               with:
                   args: production.plan
+            - name: Fastly Terraform metadata
+              id: metadata
+              uses: philippschulte/fastly-terraform-metadata-action@master
+              with:
+                  tf_action_changes_present: ${{ steps.plan.outputs.changes-present }}
+            - name: Print Fastly Service metadata
+              if: ${{ steps.plan.outputs.changes-present }} == 'true'
+              run: |
+                  echo "${{ steps.metadata.outputs.fastly_service_config_url }}"
+                  echo "${{ steps.metadata.outputs.fastly_service_version_info }}"
+                  echo "${{ steps.metadata.outputs.fastly_service_id }}"
+                  echo "${{ steps.metadata.outputs.fastly_active_version }}"
