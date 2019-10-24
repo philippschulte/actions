@@ -1,6 +1,6 @@
 provider "fastly" {
   api_key = var.FASTLY_PRODUCTION_API_KEY
-  version = "0.9.0"
+  version = "0.11.0"
 }
 
 resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
