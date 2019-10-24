@@ -36,7 +36,7 @@ jobs:
               id: metadata
               uses: philippschulte/fastly-terraform-metadata-action@master
               with:
-                  tf_action_changes_present: ${{ steps.plan.outputs.changes-present }}
+                  tf_action_output_changes_present: ${{ steps.plan.outputs.changes-present }}
             - name: Print Fastly Service metadata
               if: steps.plan.outputs.changes-present == 'true'
               run: |
