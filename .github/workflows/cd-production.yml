@@ -37,10 +37,14 @@ jobs:
               uses: philippschulte/fastly-terraform-metadata-action@master
               with:
                   tf_action_output_changes_present: ${{ steps.plan.outputs.changes-present }}
-            - name: Print Fastly Service metadata
+            - name: Slack Notification
               if: steps.plan.outputs.changes-present == 'true'
-              run: |
-                  echo "${{ steps.metadata.outputs.fastly_service_config_url }}"
-                  echo "${{ steps.metadata.outputs.fastly_service_version_info }}"
-                  echo "${{ steps.metadata.outputs.fastly_service_id }}"
-                  echo "${{ steps.metadata.outputs.fastly_active_version }}"
+              uses: rtCamp/action-slack-notify@master
+              env:
+                SLACK_CHANNEL: 'team-app-eng'
+                SLACK_COLOR: '#3278BD'
+                SLACK_ICON: https://github.com/rtCamp.png?size=48
+                SLACK_MESSAGE: ${{ steps.metadata.outputs.fastly_service_config_url }}
+                SLACK_TITLE: ${{ steps.metadata.outputs.fastly_service_version_info }}
+                SLACK_USERNAME: Terraform
+                SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

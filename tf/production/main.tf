@@ -8,13 +8,8 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   name     = "Production"
 
   domain {
-    name    = "production.boombumerang.com"
-    comment = "Production"
-  }
-
-  domain {
-    name    = "production-test.boombumerang.com"
-    comment = "apex"
+    name    = "www.action-demo-prod.com"
+    comment = "www"
   }
 
   backend {
