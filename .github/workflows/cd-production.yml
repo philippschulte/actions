@@ -41,9 +41,9 @@ jobs:
               if: steps.plan.outputs.changes-present == 'true'
               uses: rtCamp/action-slack-notify@master
               env:
-                SLACK_CHANNEL: 'team-app-eng'
-                SLACK_COLOR: '#3278BD'
-                SLACK_ICON: https://github.com/rtCamp.png?size=48
+                SLACK_CHANNEL: 'toru-test'
+                SLACK_COLOR: '#5c4ee5'
+                SLACK_ICON: https://avatars1.githubusercontent.com/u/28900900?s=70&v=4
                 SLACK_MESSAGE: ${{ steps.metadata.outputs.fastly_service_config_url }}
                 SLACK_TITLE: ${{ steps.metadata.outputs.fastly_service_version_info }}
                 SLACK_USERNAME: Terraform
