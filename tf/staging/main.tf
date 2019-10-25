@@ -8,7 +8,7 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
   name     = "Staging"
 
   domain {
-    name    = "www.action-demo-prod.com"
+    name    = "www.action-demo-stag.com"
     comment = "www"
   }
 
