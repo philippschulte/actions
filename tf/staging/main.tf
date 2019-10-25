@@ -8,12 +8,7 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
   name     = "Staging"
 
   domain {
-    name    = "staging.boombumerang.com"
-    comment = "Staging"
-  }
-
-  domain {
-    name    = "staging-www.boombumerang.com"
+    name    = "www.action-demo-prod.com"
     comment = "www"
   }
 
