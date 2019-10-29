@@ -68,3 +68,5 @@ jobs:
               uses: hashicorp/terraform-github-actions/plan@v0.4.6
               with:
                   args: tf/staging
+            - name: Print hello world
+              run: echo hello, world!
