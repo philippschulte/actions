@@ -35,7 +35,7 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
     path               = "production/"
     period             = 3600
     gzip_level         = 0
-    format             = "{ \"timestamp\": \"%t\", \"status_code\": \"%>s\", \"request_method\": \"%m\", \"uri\": \"%%{json.escape(req.url.path)}V\", \"query_string\": \"%%{json.escape(req.url.qs)}V\", \"duration\": \"%D\", \"domain\": \"%v\", \"tls_version\": \"%%{tls.client.protocol}V\", \"client_ip\": \"%h\", \"http2\": %%{fastly_info.is_h2}V, \"user_agent\": \"%%{json.escape(req.http.User-Agent)}V\", \"token_hash\": \"%%{var.partial_token_hash}V\" }"
+    format             = "%h %l %u %t \"%r\" %>s %b"
     timestamp_format   = "%Y-%m-%dT%H:%M:%S.000"
     response_condition = ""
     message_type       = "blank"
