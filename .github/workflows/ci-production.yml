@@ -53,6 +53,7 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
             TF_VAR_GCS_LOGGING_NAME: ${{ secrets.TF_VAR_GCS_LOGGING_NAME }}
+            TF_VAR_GCS_LOGGING_SECRET_KEY: ${{ secrets.TF_VAR_GCS_LOGGING_SECRET_KEY }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v1
