@@ -3,5 +3,5 @@ variable "FASTLY_PRODUCTION_API_KEY" {
 }
 
 variable "GCS_LOGGING_NAME" {
-  type = string
+  type = list(string)
 }
