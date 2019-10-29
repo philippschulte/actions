@@ -32,19 +32,3 @@ jobs:
               uses: hashicorp/terraform-github-actions/apply@v0.4.6
               with:
                   args: production.plan
-            - name: Fastly Terraform metadata
-              id: metadata
-              uses: philippschulte/fastly-terraform-metadata-action@master
-              with:
-                  tf_action_output_changes_present: ${{ steps.plan.outputs.changes-present }}
-            - name: Slack Notification
-              if: steps.plan.outputs.changes-present == 'true'
-              uses: rtCamp/action-slack-notify@master
-              env:
-                SLACK_CHANNEL: 'toru-test'
-                SLACK_COLOR: '#5c4ee5'
-                SLACK_ICON: https://avatars1.githubusercontent.com/u/28900900?s=70&v=4
-                SLACK_MESSAGE: ${{ steps.metadata.outputs.fastly_service_config_url }}
-                SLACK_TITLE: ${{ steps.metadata.outputs.fastly_service_version_info }}
-                SLACK_USERNAME: Terraform
-                SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
