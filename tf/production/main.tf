@@ -26,6 +26,20 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
     name                  = "localhost"
     port                  = 80
   }
+
+  gcslogging {
+    name               = join("", var.GCS_LOGGING_NAME)
+    email              = "test@gmail.com"
+    bucket_name        = "my_logs_bucket"
+    secret_key         = join("", var.GCS_LOGGING_SECRET_KEY)
+    path               = "production/"
+    period             = 3600
+    gzip_level         = 0
+    format             = "{ \"timestamp\": \"%t\", \"status_code\": \"%>s\", \"request_method\": \"%m\", \"uri\": \"%%{json.escape(req.url.path)}V\", \"query_string\": \"%%{json.escape(req.url.qs)}V\", \"duration\": \"%D\", \"domain\": \"%v\", \"tls_version\": \"%%{tls.client.protocol}V\", \"client_ip\": \"%h\", \"http2\": %%{fastly_info.is_h2}V, \"user_agent\": \"%%{json.escape(req.http.User-Agent)}V\", \"token_hash\": \"%%{var.partial_token_hash}V\" }"
+    timestamp_format   = "%Y-%m-%dT%H:%M:%S.000"
+    response_condition = ""
+    message_type       = "blank"
+  }
 }
 
 output "active_version" {
