@@ -8,7 +8,7 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   name     = "Production"
 
   domain {
-  name = "www.altitude-ny.com"
+    name = "www.altitude-ny.com"
   }
 
   backend {
