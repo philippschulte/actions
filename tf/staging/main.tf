@@ -13,6 +13,7 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
   }
 
   domain {
+    name    = "action-demo-stag.com"
     comment = "apex"
   }
 

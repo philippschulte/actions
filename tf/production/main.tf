@@ -13,6 +13,7 @@ resource "fastly_service_v1" "api-service-production-0p7ElaomsexoNHwdMbYJac" {
   }
 
   domain {
+    name    = "action-demo-prod.com"
     comment = "apex"
   }
 
