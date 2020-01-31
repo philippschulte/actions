@@ -37,5 +37,3 @@ jobs:
           tf_actions_subcommand: apply
           tf_actions_comment: false
           args: staging.plan
-      - name: List
-        run: ls -al
