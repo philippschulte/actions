@@ -40,6 +40,10 @@ jobs:
           tf_actions_subcommand: apply
           tf_actions_comment: false
           args: production.plan
+      - name: List
+        run: ls -al
+      - name: Terraform Show
+        run: terraform show
       - name: Fastly Service Metadata
         id: metadata
         uses: philippschulte/fastly-terraform-metadata-action@f46de82a333ad3d9b4a9946c381b307a11b3e6c0
