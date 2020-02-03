@@ -44,7 +44,7 @@ jobs:
         id: metadata
         uses: philippschulte/fastly-terraform-metadata-action@56f496ef7cdeb586886c8175dffe849062cbab1d
         with:
-          tf_version: 0.12.20
+          tf_version: latest
           tf_plan_has_changes: ${{ steps.plan.outputs.tf_actions_plan_has_changes }}
       - name: Slack Notification
         if: steps.plan.outputs.tf_actions_plan_has_changes == 'true'

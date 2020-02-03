@@ -12,11 +12,6 @@ resource "fastly_service_v1" "api-service-staging-1SOF2sf218IFdLZhnqBlKB" {
     comment = "www"
   }
 
-  domain {
-    name    = "action-demo-stag.com"
-    comment = "apex"
-  }
-
   backend {
     address               = "1.2.3.4"
     auto_loadbalance      = true
