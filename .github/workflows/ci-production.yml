@@ -18,19 +18,19 @@ jobs:
       - name: Terraform Init
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: init
           args: tf/production
       - name: Terraform Format
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: fmt
           args: tf/production
       - name: Terraform Validate
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: validate
           args: tf/production
       - name: Terraform Import
@@ -40,6 +40,6 @@ jobs:
       - name: Terraform Plan
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: plan
           args: tf/production
