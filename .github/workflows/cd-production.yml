@@ -17,7 +17,7 @@ jobs:
       - name: Terraform Init
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: init
           tf_actions_comment: false
           args: tf/production
@@ -29,22 +29,23 @@ jobs:
         id: plan
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: plan
           tf_actions_comment: false
           args: -out=production.plan tf/production
       - name: Terraform Apply
         uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
         with:
-          tf_actions_version: 0.12.19
+          tf_actions_version: 0.12.20
           tf_actions_subcommand: apply
           tf_actions_comment: false
           args: production.plan
       - name: Fastly Service Metadata
         id: metadata
-        uses: philippschulte/fastly-terraform-metadata-action@a8c982f2962c0ba75a82bb91893df649870401ec
+        uses: philippschulte/fastly-terraform-metadata-action@56f496ef7cdeb586886c8175dffe849062cbab1d
         with:
-          tf_action_output_changes_present: ${{ steps.plan.outputs.tf_actions_plan_has_changes }}
+          tf_version: 0.12.20
+          tf_plan_has_changes: ${{ steps.plan.outputs.tf_actions_plan_has_changes }}
       - name: Slack Notification
         if: steps.plan.outputs.tf_actions_plan_has_changes == 'true'
         uses: rtCamp/action-slack-notify@4d4ce0d91186ffe6633a8cda645146d38e88228b
