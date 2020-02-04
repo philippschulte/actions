@@ -42,7 +42,7 @@ jobs:
           args: production.plan
       - name: Fastly Service Metadata
         id: metadata
-        uses: philippschulte/fastly-terraform-metadata-action@56f496ef7cdeb586886c8175dffe849062cbab1d
+        uses: philippschulte/fastly-terraform-metadata-action@c1edde36d4fad5fe61bf9ecf959b06e473a9a325
         with:
           tf_version: 0.12.20
           tf_plan_has_changes: ${{ steps.plan.outputs.tf_actions_plan_has_changes }}
