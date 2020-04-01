@@ -5,41 +5,46 @@ on:
       - master
 jobs:
   production:
-    name: 'Terraform: format, validate, plan'
+    name: init, fmt, validate, import, plan
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TF_VERSION: latest
       TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
       TF_VAR_GCS_LOGGING_NAME: ${{ secrets.TF_VAR_GCS_LOGGING_NAME }}
       TF_VAR_GCS_LOGGING_SECRET_KEY: ${{ secrets.TF_VAR_GCS_LOGGING_SECRET_KEY }}
     steps:
       - name: Checkout
-        uses: actions/checkout@722adc63f1aa60a57ec37892e133b1d319cae598
+        uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
       - name: Terraform Init
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: init
           args: tf/production
       - name: Terraform Format
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: fmt
           args: tf/production
       - name: Terraform Validate
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: validate
           args: tf/production
       - name: Terraform Import
-        run: terraform import -input=false -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
+        with:
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_subcommand: import
+          args: -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
       - name: Update Terraform State
         run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
       - name: Terraform Plan
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: plan
           args: tf/production
