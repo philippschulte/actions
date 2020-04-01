@@ -5,53 +5,66 @@ on:
       - master
 jobs:
   production:
-    name: 'Terraform: plan, apply'
+    name: init, import, plan, apply, metadata, slack
     runs-on: ubuntu-latest
     env:
+      TF_VERSION: latest
       TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
       TF_VAR_GCS_LOGGING_NAME: ${{ secrets.TF_VAR_GCS_LOGGING_NAME }}
       TF_VAR_GCS_LOGGING_SECRET_KEY: ${{ secrets.TF_VAR_GCS_LOGGING_SECRET_KEY }}
     steps:
       - name: Checkout
-        uses: actions/checkout@722adc63f1aa60a57ec37892e133b1d319cae598
+        uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
       - name: Terraform Init
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: init
           tf_actions_comment: false
           args: tf/production
       - name: Terraform Import
-        run: terraform import -input=false -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
+        with:
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_subcommand: import
+          tf_actions_comment: false
+          args: -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
       - name: Update Terraform State
         run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
       - name: Terraform Plan
         id: plan
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: plan
           tf_actions_comment: false
           args: -out=production.plan tf/production
       - name: Terraform Apply
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: apply
           tf_actions_comment: false
           args: production.plan
+      - name: Terraform Output
+        id: output
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
+        with:
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_subcommand: output
+          tf_actions_comment: false
       - name: Fastly Service Metadata
         id: metadata
-        uses: philippschulte/fastly-terraform-metadata-action@c1edde36d4fad5fe61bf9ecf959b06e473a9a325
+        uses: philippschulte/fastly-terraform-metadata-action@8ed45e4daf8c76e259d301d3adde29b853c7cb78
         with:
-          tf_version: 0.12.20
           tf_plan_has_changes: ${{ steps.plan.outputs.tf_actions_plan_has_changes }}
+          tf_output_json_string: ${{ steps.output.outputs.tf_actions_output }}
       - name: Slack Notification
         if: steps.plan.outputs.tf_actions_plan_has_changes == 'true'
-        uses: rtCamp/action-slack-notify@4d4ce0d91186ffe6633a8cda645146d38e88228b
+        uses: rtCamp/action-slack-notify@061a1e4ee0c8d960c1069e0fd4fe88c534700cfd
         env:
           SLACK_CHANNEL: toru-test
-          SLACK_COLOR: '#5c4ee5'
+          SLACK_COLOR: #5c4ee5
           SLACK_ICON: https://avatars1.githubusercontent.com/u/28900900?s=70&v=4
           SLACK_MESSAGE: ${{ steps.metadata.outputs.fastly_service_config_url }}
           SLACK_TITLE: ${{ steps.metadata.outputs.fastly_service_version_info }}

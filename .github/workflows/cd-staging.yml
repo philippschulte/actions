@@ -5,35 +5,41 @@ on:
       - master
 jobs:
   staging:
-    name: 'Terraform: plan, apply'
+    name: init, import, plan, apply
     runs-on: ubuntu-latest
     env:
+      TF_VERSION: latest
       TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
     steps:
       - name: Checkout
-        uses: actions/checkout@722adc63f1aa60a57ec37892e133b1d319cae598
+        uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
       - name: Terraform Init
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: init
           tf_actions_comment: false
           args: tf/staging
       - name: Terraform Import
-        run: terraform import -input=false -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
+        with:
+          tf_actions_version: ${{ env.TF_VERSION }}
+          tf_actions_subcommand: import
+          tf_actions_comment: false
+          args: -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
       - name: Update Terraform State
         run: jq '.resources[].instances[].attributes.activate = true' terraform.tfstate > temp && mv temp terraform.tfstate
       - name: Terraform Plan
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: plan
           tf_actions_comment: false
           args: -out=staging.plan tf/staging
       - name: Terraform Apply
-        uses: hashicorp/terraform-github-actions@81c27694e1545b2b39333169f11d5b4301897be2
+        uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
-          tf_actions_version: 0.12.20
+          tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: apply
           tf_actions_comment: false
           args: staging.plan
