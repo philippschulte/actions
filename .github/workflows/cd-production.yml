@@ -64,7 +64,7 @@ jobs:
         uses: rtCamp/action-slack-notify@061a1e4ee0c8d960c1069e0fd4fe88c534700cfd
         env:
           SLACK_CHANNEL: toru-test
-          SLACK_COLOR: #5c4ee5
+          SLACK_COLOR: '#5c4ee5'
           SLACK_ICON: https://avatars1.githubusercontent.com/u/28900900?s=70&v=4
           SLACK_MESSAGE: ${{ steps.metadata.outputs.fastly_service_config_url }}
           SLACK_TITLE: ${{ steps.metadata.outputs.fastly_service_version_info }}
