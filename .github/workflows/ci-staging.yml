@@ -10,6 +10,10 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TF_VERSION: latest
+      TF_DIRECTORY: tf/staging
+      TF_DEPLOYMENT_ID: fastly_service_v1
+      TF_RESOURCE_ID: api-service-staging-1SOF2sf218IFdLZhnqBlKB
+      TF_SERVICE_ID: 1SOF2sf218IFdLZhnqBlKB
       TF_VAR_FASTLY_STAGING_API_KEY: ${{ secrets.TF_VAR_FASTLY_STAGING_API_KEY }}
     steps:
       - name: Checkout
@@ -19,25 +23,25 @@ jobs:
         with:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: init
-          args: tf/staging
+          args: ${{ env.TF_DIRECTORY }}
       - name: Terraform Format
         uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: fmt
-          args: tf/staging
+          args: ${{ env.TF_DIRECTORY }}
       - name: Terraform Validate
         uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: validate
-          args: tf/staging
+          args: ${{ env.TF_DIRECTORY }}
       - name: Terraform Import
         uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: import
-          args: -config=tf/staging -no-color fastly_service_v1.api-service-staging-1SOF2sf218IFdLZhnqBlKB 1SOF2sf218IFdLZhnqBlKB
+          args: -config=${{ env.TF_DIRECTORY }} -no-color ${{ env.TF_DEPLOYMENT_ID }}.${{ env.TF_RESOURCE_ID }} ${{ env.TF_SERVICE_ID }}
       - name: Update Terraform State
         run: jq '.resources[].instances[].attributes.activate = true' terraform.tfstate > temp && mv temp terraform.tfstate
       - name: Terraform Plan
@@ -45,4 +49,4 @@ jobs:
         with:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: plan
-          args: tf/staging
+          args: ${{ env.TF_DIRECTORY }}
