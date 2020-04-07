@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_VERSION: latest
+      TF_DIRECTORY: tf/production
+      TF_DEPLOYMENT_ID: fastly_service_v1
+      TF_RESOURCE_ID: api-service-production-0p7ElaomsexoNHwdMbYJac
+      TF_SERVICE_ID: 0p7ElaomsexoNHwdMbYJac
       TF_VAR_FASTLY_PRODUCTION_API_KEY: ${{ secrets.TF_VAR_FASTLY_PRODUCTION_API_KEY }}
       TF_VAR_GCS_LOGGING_NAME: ${{ secrets.TF_VAR_GCS_LOGGING_NAME }}
       TF_VAR_GCS_LOGGING_SECRET_KEY: ${{ secrets.TF_VAR_GCS_LOGGING_SECRET_KEY }}
@@ -21,14 +25,14 @@ jobs:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: init
           tf_actions_comment: false
-          args: tf/production
+          args: ${{ env.TF_DIRECTORY }}
       - name: Terraform Import
         uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: import
           tf_actions_comment: false
-          args: -config=tf/production -no-color fastly_service_v1.api-service-production-0p7ElaomsexoNHwdMbYJac 0p7ElaomsexoNHwdMbYJac
+          args: -config=${{ env.TF_DIRECTORY }} -no-color ${{ env.TF_DEPLOYMENT_ID }}.${{ env.TF_RESOURCE_ID }} ${{ env.TF_SERVICE_ID }}
       - name: Update Terraform State
         run: jq '.resources[].instances[].attributes.activate = false' terraform.tfstate > temp && mv temp terraform.tfstate
       - name: Terraform Plan
@@ -38,7 +42,7 @@ jobs:
           tf_actions_version: ${{ env.TF_VERSION }}
           tf_actions_subcommand: plan
           tf_actions_comment: false
-          args: -out=production.plan tf/production
+          args: -out=production.plan ${{ env.TF_DIRECTORY }}
       - name: Terraform Apply
         uses: hashicorp/terraform-github-actions@1acd6aa693246e33c9d49f861878fc5813736d47
         with:
